@@ -1,4 +1,4 @@
-# 💍 Invitación de Boda – Nacho & [Nombre Pareja]
+# 💍 Invitación de Boda – Nacho & Hanna
 
 Bienvenidos a nuestra invitación digital de boda ✨  
 Un pequeño sitio web estático publicado con **GitHub Pages**.
@@ -29,14 +29,6 @@ Este proyecto es un **sitio estático de una sola página** (`index.html`) con:
 
 ## 📸 Vista previa
 ![Captura de la invitación](img/preview.png)
-
----
-
-## 🚀 Cómo publicar en tu cuenta
-1. Crea un repositorio público en GitHub.
-2. Sube el archivo `index.html` y los assets (ej. `img/`).
-3. Activa **GitHub Pages** en **Settings → Pages**.
-4. Listo 🎊. El sitio queda disponible en `https://TU-USUARIO.github.io/mi-invitacion/`.
 
 ---
 
