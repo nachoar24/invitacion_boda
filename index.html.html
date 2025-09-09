@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="es-CR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="light only" />
+  <title>Invitación — Nuestra boda</title>
+  <meta name="theme-color" content="#BFC8AB"/>
+
+  <!-- Tipografías -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=PT+Serif:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Íconos -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet"/>
+
+  <style>
+    :root{
+      --brand:#BFC8AB;      /* color principal */
+      --brand-2:#90A38A;    /* variantes */
+      --ink:#333;
+      --muted:#6b7280;
+      --paper:#fff;
+    }
+
+    html,body{height:100%;}
+    body{font-family:Poppins,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial; color:var(--ink); background:#fafafa;}
+
+    /* Hero */
+    .hero{position:relative; min-height:90dvh; display:grid; place-items:center; overflow:hidden;}
+    .hero::before{
+      content:""; position:absolute; inset:0;
+      background:url('https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=2070&auto=format&fit=crop') center/cover no-repeat;
+      filter:grayscale(.1) contrast(1.1) brightness(.9);
+      transform:scale(1.02);
+    }
+    .hero::after{content:""; position:absolute; inset:0; background:linear-gradient(to top, rgba(0,0,0,.45), rgba(0,0,0,.15));}
+    .hero .content{position:relative; z-index:2; text-align:center; color:#fff;}
+    .names{font-family:'PT Serif',serif; font-weight:700; font-size:clamp(42px,6vw,72px); letter-spacing:.5px}
+    .amp{font-size:clamp(36px,5vw,64px); opacity:.95}
+    .date-pill{display:inline-flex; align-items:center; gap:.6rem; background:rgba(191,200,171,.9); color:#111; padding:.5rem 1rem; border-radius:999px; font-weight:600}
+
+    /* Countdown */
+    .countdown{background:linear-gradient(180deg, #f7f7f7 0%, #fff 100%);}
+    .cd-item{min-width:120px;}
+    .cd-box{background:#fff; border:1px dashed #d6d6d6; border-radius:16px; padding:1rem 1.25rem; box-shadow:0 6px 24px rgba(0,0,0,.06)}
+    .cd-num{font-size:clamp(32px,5vw,48px); font-weight:700; font-family:'PT Serif',serif; color:#1f2937}
+    .cd-lbl{font-size:.9rem; color:var(--muted); letter-spacing:.08em; text-transform:uppercase}
+
+    /* Section titles */
+    .sec-title{font-family:'PT Serif',serif; font-weight:700; font-size:clamp(28px,4.5vw,40px)}
+    .sec-sub{color:var(--muted)}
+
+    /* Cards with border ornaments */
+    .orn-card{position:relative; border-radius:18px; padding:1.25rem; background:linear-gradient(180deg,#ffffff 0%,#f9fafb 100%); box-shadow:0 10px 30px rgba(0,0,0,.06); border:1px solid #eef0ea}
+    .orn-card .top-line, .orn-card .bottom-line{position:absolute; left:18px; right:18px; height:0; border-top:1px dashed #cfd7c2}
+    .orn-card .top-line{top:12px} .orn-card .bottom-line{bottom:12px}
+
+    .btn-brand{--bs-btn-bg:var(--brand); --bs-btn-border-color:var(--brand); --bs-btn-hover-bg:var(--brand-2); --bs-btn-hover-border-color:var(--brand-2); --bs-btn-color:#111; font-weight:600}
+    .btn-ghost{background:#fff; border:1px dashed #cfd7c2; font-weight:600}
+
+    /* Gallery */
+    .gallery{display:grid; grid-template-columns:repeat(12,1fr); gap:10px}
+    .gallery a{position:relative; overflow:hidden; border-radius:16px; grid-column:span 4;}
+    .gallery img{width:100%; height:100%; object-fit:cover; transition:transform .4s ease}
+    .gallery a:hover img{transform:scale(1.06)}
+    @media(max-width:768px){.gallery{grid-template-columns:repeat(6,1fr)} .gallery a{grid-column:span 6}}
+
+    /* Footer */
+    footer{background:linear-gradient(0deg,#f6f7f4, #ffffff);}
+
+    /* Floating music button */
+    #musicBtn{position:fixed; right:16px; bottom:16px; z-index:50; width:54px; height:54px; border-radius:50%; display:grid; place-items:center; background:var(--brand); border:none; box-shadow:0 10px 20px rgba(0,0,0,.2)}
+
+    /* Modal styles slight tweak */
+    .modal-header{border-bottom:1px dashed #e5e7eb}
+    .modal-footer{border-top:1px dashed #e5e7eb}
+  </style>
+</head>
+<body>
+
+  <!-- HERO / PORTADA -->
+  <header class="hero">
+    <div class="content container px-3">
+      <div class="mb-3">
+        <span class="date-pill"><i class="bi bi-calendar-heart"></i><span id="heroDateLabel">13.12.2025</span></span>
+      </div>
+      <h1 class="names mb-2"><span id="nameA">Nombre A</span> <span class="amp">&amp;</span> <span id="nameB">Nombre B</span></h1>
+      <p class="lead" style="max-width:680px;margin:0 auto">Nuestro amor es la historia que siempre soñamos escribir</p>
+      <div class="d-flex gap-2 justify-content-center mt-4 flex-wrap">
+        <a id="btnConfirmar" class="btn btn-brand px-3" target="_blank"><i class="bi bi-check2-circle me-1"></i>Confirmar asistencia</a>
+        <a id="btnCalendario" class="btn btn-ghost px-3" target="_blank"><i class="bi bi-calendar-plus me-1"></i>Agendar</a>
+        <a id="btnComoLlegar" class="btn btn-ghost px-3" target="_blank"><i class="bi bi-geo-alt me-1"></i>¿Cómo llegar?</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- CUENTA REGRESIVA -->
+  <section class="countdown py-5">
+    <div class="container text-center">
+      <p class="text-uppercase text-muted mb-2">Falta</p>
+      <div class="d-flex justify-content-center gap-3 flex-wrap">
+        <div class="cd-item">
+          <div class="cd-box">
+            <div class="cd-num" id="cdDays">0</div>
+            <div class="cd-lbl">días</div>
+          </div>
+        </div>
+        <div class="cd-item">
+          <div class="cd-box">
+            <div class="cd-num" id="cdHours">0</div>
+            <div class="cd-lbl">hs</div>
+          </div>
+        </div>
+        <div class="cd-item">
+          <div class="cd-box">
+            <div class="cd-num" id="cdMinutes">0</div>
+            <div class="cd-lbl">min</div>
+          </div>
+        </div>
+        <div class="cd-item">
+          <div class="cd-box">
+            <div class="cd-num" id="cdSeconds">0</div>
+            <div class="cd-lbl">seg</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DETALLES / CEREMONIA -->
+  <section class="py-5">
+    <div class="container">
+      <div class="row g-4 align-items-stretch">
+        <div class="col-lg-8 mx-auto">
+          <div class="orn-card h-100">
+            <div class="top-line"></div><div class="bottom-line"></div>
+            <div class="row g-3 align-items-center">
+              <div class="col-md-7">
+                <h2 class="sec-title mb-1">Ceremonia &amp; Celebración</h2>
+                <p class="mb-3 sec-sub">Sábado 13 de diciembre — <span id="timeRange">4:00&nbsp;pm a 11:00&nbsp;pm</span></p>
+                <ul class="list-unstyled small text-muted">
+                  <li class="mb-1"><i class="bi bi-geo-alt me-1"></i><span id="venue">Nombre del lugar</span></li>
+                  <li class="mb-1"><i class="bi bi-signpost-2 me-1"></i><span id="address">Dirección completa</span></li>
+                </ul>
+                <div class="d-flex gap-2 flex-wrap mt-2">
+                  <a id="ctaAddToCalendar" class="btn btn-brand"><i class="bi bi-calendar-plus me-1"></i>Agregar al calendario</a>
+                  <a id="ctaMaps" target="_blank" class="btn btn-ghost"><i class="bi bi-map me-1"></i>¿Cómo llegar?</a>
+                </div>
+              </div>
+              <div class="col-md-5">
+                <div class="ratio ratio-4x3 rounded-4 overflow-hidden">
+                  <!-- Mapa embebido sin API key (iframe de Google Maps) -->
+                  <iframe id="mapFrame" loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALERÍA -->
+  <section class="py-5 bg-white">
+    <div class="container text-center mb-4">
+      <h2 class="sec-title">Dos corazones, una promesa</h2>
+      <p class="sec-sub">Entre miradas y sonrisas, comenzó nuestro para siempre</p>
+    </div>
+    <div class="container">
+      <div class="gallery">
+        <!-- Reemplaza las imágenes por las tuyas -->
+        <a href="#"><img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?q=80&w=1349&auto=format&fit=crop" alt="foto 1"></a>
+        <a href="#"><img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=1428&auto=format&fit=crop" alt="foto 2"></a>
+        <a href="#"><img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?q=80&w=1374&auto=format&fit=crop" alt="foto 3"></a>
+        <a href="#"><img src="https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1446&auto=format&fit=crop" alt="foto 4"></a>
+        <a href="#"><img src="https://images.unsplash.com/photo-1510301031299-5965d02185f5?q=80&w=1364&auto=format&fit=crop" alt="foto 5"></a>
+        <a href="#"><img src="https://images.unsplash.com/photo-1610173826575-2261573bb90b?q=80&w=1343&auto=format&fit=crop" alt="foto 6"></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FIESTA: música, dress code, tips -->
+  <section class="py-5">
+    <div class="container text-center mb-4">
+      <h2 class="sec-title">Fiesta</h2>
+      <p class="sec-sub">Lo importante es celebrar, pero estos detalles ayudan</p>
+    </div>
+    <div class="container">
+      <div class="row g-3">
+        <div class="col-md-4">
+          <div class="orn-card h-100 d-flex flex-column justify-content-between">
+            <div>
+              <h5 class="mb-2">Música</h5>
+              <p class="text-muted small">¿Cuál canción no puede faltar en la playlist?</p>
+            </div>
+            <a id="btnSugerirCancion" class="btn btn-brand" target="_blank"><i class="bi bi-music-note-list me-1"></i>Sugerir canción</a>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="orn-card h-100 d-flex flex-column justify-content-between">
+            <div>
+              <h5 class="mb-2">Dress code</h5>
+              <p class="text-muted small">Una orientación para tu vestuario</p>
+            </div>
+            <button class="btn btn-ghost" data-bs-toggle="modal" data-bs-target="#modalDress"><i class="bi bi-person-lines-fill me-1"></i>Ver más</button>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="orn-card h-100 d-flex flex-column justify-content-between">
+            <div>
+              <h5 class="mb-2">Tips y notas</h5>
+              <p class="text-muted small">Información adicional para tener en cuenta</p>
+            </div>
+            <button class="btn btn-ghost" data-bs-toggle="modal" data-bs-target="#modalTips"><i class="bi bi-card-checklist me-1"></i>+ Info</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REGALOS -->
+  <section class="py-5 bg-white">
+    <div class="container text-center mb-3">
+      <h2 class="sec-title">Regalos</h2>
+      <p class="sec-sub">Tu presencia es el mejor regalo. Si deseas un detalle, agradecemos tus muestras de cariño mediante transferencia o en efectivo el día de la boda.</p>
+      <button class="btn btn-brand" data-bs-toggle="modal" data-bs-target="#modalRegalos"><i class="bi bi-gift me-1"></i>Ver más</button>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="py-5">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-md-6 text-center text-md-start">
+          <div class="names">Nombre A <span class="amp">&amp;</span> Nombre B</div>
+        </div>
+        <div class="col-md-6 text-center text-md-end mt-3 mt-md-0">
+          <div class="d-inline-flex gap-2 flex-wrap">
+            <a id="footerConfirmar" class="btn btn-brand" target="_blank"><i class="bi bi-check2-circle me-1"></i>Confirmar asistencia</a>
+            <a id="footerCalendario" class="btn btn-ghost" target="_blank"><i class="bi bi-calendar-plus me-1"></i>Agendar</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- MODALS -->
+  <div class="modal fade" id="modalDress" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Dress code</h5>
+          <button class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p><strong>Formal.</strong> Nos encantaría que te inspires en los colores que darán vida a este día tan especial.</p>
+          <p class="mb-1"><strong>Hombres:</strong> traje y corbata</p>
+          <p class="mb-0"><strong>Mujeres:</strong> vestido largo</p>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="modalTips" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Tips y notas</h5>
+          <button class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <ul class="small text-muted mb-0">
+            <li>Confirmar asistencia antes del <span id="deadline">26 de septiembre</span>.</li>
+            <li>Celebración exclusivamente para adultos.</li>
+          </ul>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="modalRegalos" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Datos para regalos</h5>
+          <button class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p class="mb-2"><strong>Cuenta IBAN:</strong> <span id="iban">CR00 0000 0000 0000 0000 00</span></p>
+          <p class="mb-2"><strong>Cuenta bancaria:</strong> <span id="cuenta">000000000</span></p>
+          <p class="mb-0"><strong>SINPE Móvil:</strong> <span id="sinpe">8888-8888</span></p>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Botón música -->
+  <button id="musicBtn" class="btn" title="Play/Pause música"><i class="bi bi-play-fill"></i></button>
+  <div id="ytContainer" style="position:fixed;left:-9999px;top:-9999px;width:0;height:0;overflow:hidden"></div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- YouTube Iframe API -->
+  <script>
+    // ====== CONFIG (reemplaza con tus datos) ======
+    const INVITACION = {
+      nombres: { a: 'Keny', b: 'Carlos' },
+      fechaISO: '2025-12-13T16:00:00-06:00',           // inicio local con TZ de Costa Rica
+      fechaFinISO: '2025-12-13T23:00:00-06:00',        // fin local
+      lugar: 'Vino Mundo, Brasil de Mora',
+      direccion: 'Del peaje de Ciudad Colón, 1.4 km O, 400 m S y de la escuela de Brasil de Mora, 600 m SE.',
+      coords: { lat: 9.928358, lng: -84.229195 },
+      deadline: '2025-09-26',
+      regalos: { iban: 'CR08010200009470814695', cuenta:'947081469', sinpe:'8310-9575' },
+      // Acciones rápidas
+      confirmarURL: 'https://wa.me/50688888888?text=Hola%20confirmo%20mi%20asistencia%20a%20la%20boda%20🎉',
+      sugerirCancionURL: 'https://forms.gle/xxxxxxxxxxxxxxxx',
+      musicaYouTubeId: '2pMYJEPsZrU' // playlist o video
+    };
+    // ==============================================
+
+    // Utilidades
+    const pad2 = n => String(n).padStart(2,'0');
+    const toUTCStringCal = iso => {
+      // Convierte una fecha ISO (con offset) a formato YYYYMMDDTHHMMSSZ requerido por Google Calendar
+      const d = new Date(iso);
+      return d.getUTCFullYear()+pad2(d.getUTCMonth()+1)+pad2(d.getUTCDate())+'T'+pad2(d.getUTCHours())+pad2(d.getUTCMinutes())+pad2(d.getUTCSeconds())+'Z';
+    }
+
+    // Pinta datos
+    document.getElementById('nameA').textContent = INVITACION.nombres.a;
+    document.getElementById('nameB').textContent = INVITACION.nombres.b;
+    document.getElementById('heroDateLabel').textContent = new Date(INVITACION.fechaISO).toLocaleDateString('es-CR',{day:'2-digit',month:'2-digit',year:'numeric'}).replaceAll('/','.');
+    document.getElementById('venue').textContent = INVITACION.lugar;
+    document.getElementById('address').textContent = INVITACION.direccion;
+    document.getElementById('deadline').textContent = new Date(INVITACION.deadline).toLocaleDateString('es-CR',{day:'2-digit',month:'long'});
+    document.getElementById('iban').textContent = INVITACION.regalos.iban;
+    document.getElementById('cuenta').textContent = INVITACION.regalos.cuenta;
+    document.getElementById('sinpe').textContent = INVITACION.regalos.sinpe;
+
+    // Rango de tiempo amigable
+    (function(){
+      const ini = new Date(INVITACION.fechaISO); const fin = new Date(INVITACION.fechaFinISO);
+      const fmt = (d)=>d.toLocaleTimeString('es-CR',{hour:'2-digit',minute:'2-digit',hour12:true}).replace(' a. m.',' am').replace(' p. m.',' pm');
+      document.getElementById('timeRange').textContent = `${fmt(ini)} a ${fmt(fin)}`;
+    })();
+
+    // Enlaces principales
+    const waze = `https://ul.waze.com/ul?ll=${INVITACION.coords.lat}%2C${INVITACION.coords.lng}&navigate=yes`;
+    const gmapsPlace = `https://www.google.com/maps/search/?api=1&query=${INVITACION.coords.lat}%2C${INVITACION.coords.lng}`;
+    document.getElementById('btnConfirmar').href = INVITACION.confirmarURL;
+    document.getElementById('footerConfirmar').href = INVITACION.confirmarURL;
+    document.getElementById('btnSugerirCancion').href = INVITACION.sugerirCancionURL;
+    document.getElementById('btnComoLlegar').href = waze;
+
+    // Mapa embebido (iframe, sin API key)
+    const mapFrame = document.getElementById('mapFrame');
+    mapFrame.src = gmapsPlace + '&hl=es';
+
+    // Add to calendar (Google + archivo .ics generado al vuelo)
+    const gStart = toUTCStringCal(INVITACION.fechaISO);
+    const gEnd = toUTCStringCal(INVITACION.fechaFinISO);
+    const gCal = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent('Boda — '+INVITACION.nombres.a+' & '+INVITACION.nombres.b)}&dates=${gStart}%2F${gEnd}&details=${encodeURIComponent('¡Te esperamos!')}&location=${encodeURIComponent(INVITACION.lugar)}`;
+    document.getElementById('btnCalendario').href = gCal;
+    document.getElementById('footerCalendario').href = gCal;
+
+    // Botón central que ofrece Google o .ics
+    document.getElementById('ctaAddToCalendar').addEventListener('click', (e)=>{
+      e.preventDefault();
+      const ics = [
+        'BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Invitacion Simple//ES','CALSCALE:GREGORIAN',
+        'BEGIN:VEVENT',
+        `DTSTART:${toUTCStringCal(INVITACION.fechaISO)}`,
+        `DTEND:${toUTCStringCal(INVITACION.fechaFinISO)}`,
+        `SUMMARY:Boda — ${INVITACION.nombres.a} & ${INVITACION.nombres.b}`,
+        `DESCRIPTION:¡Te esperamos!`,
+        `LOCATION:${INVITACION.lugar}`,
+        'END:VEVENT','END:VCALENDAR' ].join('\r\n');
+      const blob = new Blob([ics], {type:'text/calendar;charset=utf-8'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a'); a.href=url; a.download='boda.ics'; a.click();
+      setTimeout(()=>URL.revokeObjectURL(url), 2000);
+    });
+    document.getElementById('ctaMaps').href = waze;
+
+    // Cuenta regresiva
+    const els={d:document.getElementById('cdDays'),h:document.getElementById('cdHours'),m:document.getElementById('cdMinutes'),s:document.getElementById('cdSeconds')};
+    const target = new Date(INVITACION.fechaISO).getTime();
+    const tick = ()=>{
+      const now = Date.now(); const dist = target - now;
+      if(dist<=0){ els.d.textContent=els.h.textContent=els.m.textContent=els.s.textContent='0'; clearInterval(tmr); return; }
+      const d=Math.floor(dist/86400000), h=Math.floor((dist%86400000)/3600000), m=Math.floor((dist%3600000)/60000), s=Math.floor((dist%60000)/1000);
+      els.d.textContent=d; els.h.textContent=h; els.m.textContent=m; els.s.textContent=s;
+    }
+    const tmr = setInterval(tick,1000); tick();
+
+    // ====== Música de fondo (requiere interacción del usuario) ======
+    let ytPlayer, playing=false;
+    const onYouTubeIframeAPIReady = ()=>{
+      ytPlayer = new YT.Player('ytContainer', { height:'0', width:'0', videoId: INVITACION.musicaYouTubeId, playerVars:{ autoplay:0, loop:1, playlist:INVITACION.musicaYouTubeId }, events:{ onReady:(ev)=>{ ev.target.setVolume(70); } } });
+    }
+    // Cargar API
+    const tag = document.createElement('script'); tag.src='https://www.youtube.com/iframe_api'; document.body.appendChild(tag);
+    window.onYouTubeIframeAPIReady = onYouTubeIframeAPIReady;
+    // Botón
+    const musicBtn = document.getElementById('musicBtn');
+    musicBtn.addEventListener('click', ()=>{
+      if(!ytPlayer) return; // aún no carga
+      if(!playing){ ytPlayer.playVideo(); musicBtn.innerHTML='<i class="bi bi-pause-fill"></i>'; playing=true; }
+      else { ytPlayer.pauseVideo(); musicBtn.innerHTML='<i class="bi bi-play-fill"></i>'; playing=false; }
+    });
+
+    // Accesos rápidos secundarios
+    document.getElementById('btnCalendario').addEventListener('click', (e)=>{ /* permite link directo Google */ });
+
+  </script>
+</body>
+</html>
