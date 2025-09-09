@@ -20,13 +20,6 @@ Este proyecto es un **sitio estático de una sola página** (`index.html`) con:
 
 ---
 
-## ⚙️ Tecnologías
-- **HTML5** + **CSS3**
-- **Bootstrap 5** para el diseño responsivo
-- **JavaScript Vanilla** para la lógica básica
-
----
-
 ## 📸 Vista previa
 ![Captura de la invitación](img/preview.png)
 
