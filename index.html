@@ -369,7 +369,7 @@
 
     // Mapa embebido (iframe, sin API key)
     const mapFrame = document.getElementById('mapFrame');
-    mapFrame.src = gmapsPlace + '&hl=es';
+    mapFrame.src = `https://www.google.com/maps?q=${INVITACION.coords.lat},${INVITACION.coords.lng}&z=17&output=embed&hl=es`;
 
     // Add to calendar (Google + archivo .ics generado al vuelo)
     const gStart = toUTCStringCal(INVITACION.fechaISO);
