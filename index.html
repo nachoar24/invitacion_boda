@@ -360,8 +360,8 @@
     })();
 
     // Enlaces principales
-    const waze = `https://ul.waze.com/ul?ll=${INVITACION.coords.lat}%2C${INVITACION.coords.lng}&navigate=yes`;
-    const gmapsPlace = `https://www.google.com/maps/search/?api=1&query=${INVITACION.coords.lat}%2C${INVITACION.coords.lng}`;
+    const waze = `https://waze.com/ul/hd1u0bnx4e` || `https://ul.waze.com/ul?ll=${INVITACION.coords.lat}%2C${INVITACION.coords.lng}&navigate=yes`;
+    const gmapsPlace = `https://maps.app.goo.gl/yMgtH4YmccbypNqP8?g_st=ipc` || `https://www.google.com/maps/search/?api=1&query=${INVITACION.coords.lat}%2C${INVITACION.coords.lng}`;
     document.getElementById('btnConfirmar').href = INVITACION.confirmarURL;
     document.getElementById('footerConfirmar').href = INVITACION.confirmarURL;
     document.getElementById('btnSugerirCancion').href = INVITACION.sugerirCancionURL;
